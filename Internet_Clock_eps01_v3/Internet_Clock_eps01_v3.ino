@@ -1,4 +1,3 @@
-//VERSAO CLIENTE UTP ESP8266
 
 void setup() {
   // put your setup code here, to run once:
