@@ -32,4 +32,11 @@ void loop() {
   Minuto = (timeClient.getMinutes());
   delay(1000);
 
+  /*
+   * 
+   * Serail.write(Hora);
+   * Serail.write(Minuto); 
+   * 
+   */
+
 }
