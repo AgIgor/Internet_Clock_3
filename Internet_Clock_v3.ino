@@ -2,39 +2,30 @@
   #include <BH1750.h>
   #include <Adafruit_NeoPixel.h>
   
-  Adafruit_NeoPixel pixels (24, 1, NEO_GRB + NEO_KHZ800);
+  Adafruit_NeoPixel pixels (24, 1, NEO_GRB + NEO_KHZ800);//INCLUIR NOVOS LEDS
     
   BH1750 lightMeter;
   
-  int lux,
+  byte lux,
       luxMax = 10,// MAX PARA AUMENTAR BRILHO
       luxMin = 5;// MIN PARA DIMINUIR BRILHO
 
-
-  int Segundo;
-  int
+  byte
     Minuto,
     newMinuto,
     dezenaM,
-    unidadeM;
-  int
+    unidadeM,
     Hora,
     dezenaH,
-    unidadeH;
-  
-  int
-    pixelHue,
+    unidadeH,
     brilhoMin   = 5,
     brilhoMax   = 255;
-    
+  
+  int long  pontoMillis,
+            pixelHue;
+                
   bool lux_flag;
   bool LED;
-
-  int long pontoMillis;
-  
-  int contSeg = 0,
-      contMin = 0,
-      contHor = 0;
   
   byte displayConfig[12][7]= {{0,0,1,2,4,5,6},  //Digito 0
                               {0,0,0,0,0,0,4},  //Digito 1
@@ -126,7 +117,7 @@ void trataDigitos(){
 }//END TRATA DIGITOS
 
 void display(){    
-    for (int ID = 0; ID < 7; ID++){
+    for (byte ID = 0; ID < 7; ID++){
       pixels.setPixelColor((displayConfig[unidadeM][ID]), pixels.gamma32(pixels.ColorHSV(pixelHue))); //LEDS UNIDADE DE Minuto
       pixels.setPixelColor((displayConfig[dezenaM][ID]+7), pixels.gamma32(pixels.ColorHSV(pixelHue)));//LEDS DEZENA DE Minuto
       pixels.setPixelColor((displayConfig[unidadeH][ID]+15), pixels.gamma32(pixels.ColorHSV(pixelHue)));//LEDS UNIDADE DE Hora
