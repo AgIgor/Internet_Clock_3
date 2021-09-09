@@ -55,6 +55,8 @@ void loop() {
     
     delay(1);
     display();//ALTERA CORES DIDPLAY
+
+    //Serial.print(("teste") + Minuto + Hora);
              
 //===============================================//
 }//END LOOP
