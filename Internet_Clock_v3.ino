@@ -6,39 +6,27 @@
     
   BH1750 lightMeter;
   
-  byte lux,
-      luxMax = 10,// MAX PARA AUMENTAR BRILHO
-      luxMin = 5;// MIN PARA DIMINUIR BRILHO
+  const byte  luxMax = 10,// MAX PARA AUMENTAR BRILHO
+              luxMin = 5;// MIN PARA DIMINUIR BRILHO
+              
+  const byte  brilhoMin   = 5, brilhoMax   = 255;                
 
-  byte
-    Minuto,
-    newMinuto,
-    dezenaM,
-    unidadeM,
-    Hora,
-    dezenaH,
-    unidadeH,
-    brilhoMin   = 5,
-    brilhoMax   = 255;
+  byte        Minuto, newMinuto, dezenaM, unidadeM, Hora, dezenaH, unidadeH;
   
-  int long  pontoMillis,
-            pixelHue;
-                
-  bool lux_flag;
-  bool LED;
-  
-  byte displayConfig[12][7]= {{0,0,1,2,4,5,6},  //Digito 0
-                              {0,0,0,0,0,0,4},  //Digito 1
-                              {0,0,0,1,3,5,6},  //Digito 2
-                              {0,0,0,1,3,4,5},  //Digito 3
-                              {0,0,0,0,2,3,4},  //Digito 4
-                              {1,1,1,2,3,4,5},  //Digito 5
-                              {1,1,2,3,4,5,6},  //Digito 6
-                              {0,0,0,0,0,1,4},  //Digito 7
-                              {0,1,2,3,4,5,6},  //Digito 8
-                              {0,0,1,2,3,4,5},  //Digito 9
-                              {0,0,0,0,1,2,3},  //Grau
-                              {0,0,0,0,0,3,6}}; //Umidade; 
+  int long    pontoMillis, pixelHue;
+
+  const byte displayConfig[12][7]= {{0,0,1,2,4,5,6},  //Digito 0
+                                    {0,0,0,0,0,0,4},  //Digito 1
+                                    {0,0,0,1,3,5,6},  //Digito 2
+                                    {0,0,0,1,3,4,5},  //Digito 3
+                                    {0,0,0,0,2,3,4},  //Digito 4
+                                    {1,1,1,2,3,4,5},  //Digito 5
+                                    {1,1,2,3,4,5,6},  //Digito 6
+                                    {0,0,0,0,0,1,4},  //Digito 7
+                                    {0,1,2,3,4,5,6},  //Digito 8
+                                    {0,0,1,2,3,4,5},  //Digito 9
+                                    {0,0,0,0,1,2,3},  //Grau
+                                    {0,0,0,0,0,3,6}}; //Umidade; 
 
 void setup(){
   Serial.begin(115200);
@@ -71,6 +59,9 @@ void loop() {
 //===============================================//
 }//END LOOP
 void luxRead(){
+  byte lux;
+  bool lux_flag;
+  
     lux = lightMeter.readLightLevel();      
     if(lux >= luxMax){
       pixels.setBrightness(brilhoMax);
@@ -90,7 +81,9 @@ void luxRead(){
     }//END ELSE LUX FLAG    
 }//END LUX READ
 //===============================================//
-void piscaPonto(){  
+void piscaPonto(){ 
+  bool LED; 
+  
   LED = !LED; 
     if(LED){
       pixels.setPixelColor(14, pixels.gamma32(pixels.ColorHSV(pixelHue)));
