@@ -2,15 +2,11 @@
   #include <BH1750.h>
   #include <Adafruit_NeoPixel.h>
   #include <SoftwareSerial.h>
+ 
   SoftwareSerial mySerial(2, 3); // RX, TX
-  
-  Adafruit_NeoPixel pixels (24, 1, NEO_GRB + NEO_KHZ800);//INCLUIR NOVOS LEDS
-    
+  Adafruit_NeoPixel pixels (24, 1, NEO_GRB + NEO_KHZ800);//INCLUIR NOVOS LEDS  
   BH1750 lightMeter;
 
-  String  recebido;
-  char    caractere;
-  
   const byte  luxMax = 10,// MAX PARA AUMENTAR BRILHO
               luxMin = 5;// MIN PARA DIMINUIR BRILHO
               
@@ -34,7 +30,7 @@
                                     {0,0,0,0,0,3,6}}; //Umidade; 
 
 void setup(){
-  Serial.begin(115200);
+  Serial.begin(115200); 
   mySerial.begin(9600);
   mySerial.setTimeout(20);
   pixels.begin();
@@ -57,33 +53,21 @@ void loop() {
 }//END LOOP             
 //===============================================//
 void eventoSerial(){
-     caractere = mySerial.read();
-     if(caractere == '\n'){
-      //Serial.println(recebido);
-      trataString(recebido);//funçao
-      recebido = "";
-     }else{
-      recebido.concat(caractere);
-      
-      if(recebido.endsWith("Ok")){
-        recebido = "";
-        Serial.println("Esp Iniciado");
-      }//end if texto ok
-      
-     }//end else
-     delay(1);
+    String val; 
+    String  recebido = mySerial.readStringUntil('\n'); 
+    val = recebido.charAt(0);
+    dezenaH = val.toInt();
+    val = recebido.charAt(1);
+    unidadeH = val.toInt();
+    val = recebido.charAt(3);
+    dezenaM = val.toInt();
+    val = recebido.charAt(4);
+    unidadeM = val.toInt();
+    pixels.clear();
+    delay(1);
+    display();
     
 }//END EVENTO SERIAL
-//===============================================//
-void trataString(String horario){ 
-  unidadeH = horario.substring(0,1).toInt();
-  dezenaH  = horario.substring(1,2).toInt();
-  
-  unidadeM = horario.substring(3,4).toInt();
-  dezenaM  = horario.substring(4,5).toInt();
-  pixels.clear();
-   display(); 
-}//END TRATA STRING
 //===============================================//
 void luxRead(){
   byte lux;
@@ -121,21 +105,6 @@ void piscaPonto(){
     }
 }//END PISCA PONTOS
 //===============================================//
-//void trataDigitos(){
-////=========================//Hora//=========================//
-//    dezenaH = Hora;
-//    unidadeH = dezenaH;
-//    dezenaH = dezenaH/10;
-//    unidadeH = unidadeH % 10;
-////=========================//Minuto//=========================//
-//    dezenaM = Minuto;
-//    unidadeM = dezenaM;
-//    dezenaM = dezenaM/10;
-//    unidadeM = unidadeM % 10;
-//    pixels.clear();
-//    display();
-//}//END TRATA DIGITOS
-
 void display(){    
     for (byte ID = 0; ID < 7; ID++){
       pixels.setPixelColor((displayConfig[unidadeM][ID]), pixels.gamma32(pixels.ColorHSV(pixelHue))); //LEDS UNIDADE DE Minuto

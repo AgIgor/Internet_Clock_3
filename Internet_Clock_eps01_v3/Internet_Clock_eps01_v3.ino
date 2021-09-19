@@ -11,8 +11,7 @@
   WiFiUDP ntpUDP;
   NTPClient timeClient(ntpUDP, "south-america.pool.ntp.org", utcOffsetInSeconds,60000);
 
-//  byte  Minuto,
-//        Hora;
+  byte  Minuto,newMinuto;
 
 void setup() {
   Serial.begin(9600);
@@ -28,12 +27,10 @@ void setup() {
 
 void loop() {
   timeClient.update();
-//  Hora = (timeClient.getHours());
-//  Minuto = (timeClient.getMinutes());
-  Serial.println(timeClient.getFormattedTime());
-//  Serial.print(Hora);
-//  Serial.print(":");
-//  Serial.print(Minuto);
-//  Serial.println(";");
-  delay(1000);
+  Minuto = (timeClient.getMinutes());
+  if(newMinuto != Minuto){
+    newMinuto = Minuto;
+    Serial.println(timeClient.getFormattedTime());   
+  }
+  delay(10);
 }
