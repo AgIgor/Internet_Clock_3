@@ -7,7 +7,7 @@
   Adafruit_NeoPixel pixels (24, 1, NEO_GRB + NEO_KHZ800);//INCLUIR NOVOS LEDS  
   BH1750 lightMeter;
 
-  const byte  luxMax = 10,// MAX PARA AUMENTAR BRILHO
+  const byte  luxMax = 7,// MAX PARA AUMENTAR BRILHO
               luxMin = 5;// MIN PARA DIMINUIR BRILHO
               
   const byte  brilhoMin   = 5, brilhoMax   = 255;                
@@ -48,7 +48,7 @@ void loop() {
     }//END SERIAL AVAILABEL
       
     delay(1);
-    display();//ALTERA CORES DIDPLAY
+    display();
 
 }//END LOOP             
 //===============================================//
