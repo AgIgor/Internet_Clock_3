@@ -3,7 +3,7 @@
   #include <Adafruit_NeoPixel.h>
   #include <SoftwareSerial.h>
  
-  SoftwareSerial mySerial(2, 3); // RX, TX
+  SoftwareSerial mySerial(2, 3);    // RX, TX
   Adafruit_NeoPixel pixels (24, 1, NEO_GRB + NEO_KHZ800);//INCLUIR NOVOS LEDS  
   BH1750 lightMeter;
 
